@@ -250,6 +250,27 @@ public class Solution {
         return max;
     }
 
+    // 滑动窗口的最大值优先队列解法
+    public static int[] maxSlidingWindowByPriorityQueue(int[] nums, int k) {
+        int[] maxArr = new int[nums.length - k + 1];
+        // 构建大根堆
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[0] != b[0] ? b[0] - a[0] : b[1] - a[1]);
+        for (int i = 0; i < k; i++) {
+            queue.offer(new int[]{nums[i], i});
+        }
+        maxArr[0] = queue.peek()[0];
+        int j = 1;
+        for (int i = k; i < nums.length; i++) {
+            queue.offer(new int[]{nums[i], i});
+            // 移除堆顶元素，知道堆顶元素（及最大值）的索引在滑动窗口内
+            while (queue.peek()[1] <= i - k) {
+                queue.poll();
+            }
+            maxArr[j++] = queue.peek()[0];
+        }
+        return maxArr;
+    }
+
     public static void main(String[] args) {
         int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
         for (int num : nums) {
