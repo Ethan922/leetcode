@@ -223,7 +223,37 @@ public class Solution {
 
     }
 
+    public static int[] maxSlidingWindow(int[] nums, int k) {
+        int[] maxArr = new int[nums.length - k + 1];
+        int max = findMax(0, k, nums);
+        maxArr[0] = max;
+        int j = 1;
+        for (int i = 1; i < nums.length - k + 1; i++) {
+            // 左边界的前一位是上一个滑动窗口的最大值
+            if (max == nums[i - 1] && max != nums[i]) {
+                max = findMax(i, k, nums);
+
+            } else {
+                // 判断新加入滑动窗口的值和上一个最大值
+                max = Math.max(max, nums[i + k - 1]);
+            }
+            maxArr[j++] = max;
+        }
+        return maxArr;
+    }
+
+    private static int findMax(int start, int n, int[] arr) {
+        int max = arr[start];
+        for (int i = start + 1; i < start + n; i++) {
+            max = Math.max(max, arr[i]);
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        System.out.println(findAnagrams("ab", "ba"));
+        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
+        for (int num : nums) {
+            System.out.println(num);
+        }
     }
 }
