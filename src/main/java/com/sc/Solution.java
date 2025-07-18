@@ -31,7 +31,7 @@ public class Solution {
     public List<List<String>> groupAnagrams1(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strs) {
-            char[] countArr = countArr(str);
+            char[] countArr = countChar(str);
             String s = new String(countArr);
             List<String> list = map.getOrDefault(s, new ArrayList<>());
             list.add(str);
@@ -156,7 +156,7 @@ public class Solution {
     }
 
     public static List<Integer> findAnagrams(String s, String p) {
-        char[] pArr = countArr(p);
+        char[] pArr = countChar(p);
         int pLen = p.length();
         int sLen = s.length();
         ArrayList<Integer> ret = new ArrayList<>();
@@ -165,7 +165,7 @@ public class Solution {
         }
         for (int i = 0; i < sLen - pLen + 1; i++) {
             String str = s.substring(i, pLen + i);
-            char[] strArr = countArr(str);
+            char[] strArr = countChar(str);
             if (compareArr(strArr, pArr)) {
                 ret.add(i);
             }
@@ -182,7 +182,7 @@ public class Solution {
         return true;
     }
 
-    private static char[] countArr(String str) {
+    private static char[] countChar(String str) {
         char[] countArr = new char[26];
         for (int i = 0; i < str.length(); i++) {
             countArr[str.charAt(i) - 'a']++;
@@ -271,10 +271,82 @@ public class Solution {
         return maxArr;
     }
 
-    public static void main(String[] args) {
-        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
-        for (int num : nums) {
-            System.out.println(num);
+    // 最小覆盖字串
+    public static String minWindow(String s, String t) {
+        int sLen = s.length();
+        int tLen = t.length();
+        if (sLen < tLen) {
+            return "";
         }
+        // 滑动窗口中的字符统计map
+        Map<Character, Integer> sMap = new HashMap<>();
+        // 目标字符串t的字符统计map
+        Map<Character, Integer> tMap = new HashMap<>();
+        // 统计t中的字符
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+        // 左指针，指向滑动窗口的左边界
+        int l = 0;
+        int maxRight = sLen;
+        // 预处理s,如果l指向的字符不在tMap内则直接跳过
+        for (int i = 0; i < sLen; i++) {
+            if (!tMap.containsKey(s.charAt(l))) {
+                l++;
+            } else {
+                break;
+            }
+        }
+        for (int i = sLen - 1; i >= l; i--) {
+            if (!tMap.containsKey(s.charAt(i))) {
+                maxRight--;
+            } else {
+                break;
+            }
+        }
+        if (l == s.length()) {
+            return "";
+        }
+        int r = l;
+        int minLen = sLen + 1, ansL = -1, ansR = -1;
+        while (r < maxRight) {
+            sMap.put(s.charAt(r), sMap.getOrDefault(s.charAt(r), 0) + 1);
+            // 滑动窗口包含全部字符
+            while (check(sMap, tMap) && l <= r) {
+                // 统计最小值
+                int curLen = r - l + 1;
+                if (curLen < minLen) {
+                    minLen = curLen;
+                    ansL = l;
+                    ansR = r;
+                }
+                // 缩减滑动窗口大小,更新sMap中左边界字符的个数，左指针右移
+                sMap.put(s.charAt(l), sMap.getOrDefault(s.charAt(l), 0) - 1);
+                l++;
+            }
+            r++;
+        }
+        return ansL == -1 ? "" : s.substring(ansL, ansR + 1);
+    }
+
+    // 比较tMap中的字符是否全包含sMap中的字符
+    private static boolean check(Map<Character, Integer> sMap, Map<Character, Integer> tMap) {
+        for (Map.Entry<Character, Integer> entry : tMap.entrySet()) {
+            Character c = entry.getKey();
+            Integer cnt = entry.getValue();
+            if (sMap.getOrDefault(c, 0) < cnt) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(minWindow("nnnnabcnnn", "cba"));
+//        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
+//        for (int num : nums) {
+//            System.out.println(num);
+//        }
     }
 }
