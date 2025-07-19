@@ -29,6 +29,7 @@ public class Solution {
         }
         return new ArrayList<>(map.values());
     }
+
     // 字母异位次分组
     public List<List<String>> groupAnagrams1(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
@@ -161,6 +162,7 @@ public class Solution {
         }
         return len;
     }
+
     // 找到字符串中所有字母异位词
     public static List<Integer> findAnagrams(String s, String p) {
         char[] pArr = countChar(p);
@@ -363,6 +365,23 @@ public class Solution {
             maxSum = Math.max(dp[i], maxSum);
         }
         return maxSum;
+    }
+
+    // 合并区间
+    public int[][] merge(int[][] intervals) {
+        // 按照左端点排序
+        Arrays.sort(intervals, (o1, o2) -> o1[0] != o2[0] ? o1[0] - o2[0] : o1[1] - o2[1]);
+        List<int[]> ret = new ArrayList<>();
+        ret.add(intervals[0]);
+        for (int i = 1; i < intervals.length; i++) {
+            int[] pre = ret.get(ret.size() - 1);
+            if (intervals[i][0] <= pre[1]) {
+                pre[1] = Math.max(pre[1], intervals[i][1]);
+            } else {
+                ret.add(intervals[i]);
+            }
+        }
+        return ret.toArray(new int[ret.size()][]);
     }
 
     public static void main(String[] args) {
