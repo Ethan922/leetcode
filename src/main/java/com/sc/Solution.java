@@ -777,6 +777,17 @@ public class Solution {
         return dummyNode.next;
     }
 
+    // 买卖股票的最佳时机
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int minPrice = prices[0];
+        for (int price : prices) {
+            maxProfit = Math.max(maxProfit, price - minPrice);
+            minPrice = Math.min(minPrice, price);
+        }
+        return maxProfit;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
