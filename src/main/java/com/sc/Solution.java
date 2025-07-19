@@ -524,6 +524,32 @@ public class Solution {
         }
     }
 
+    // 螺旋矩阵
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] direction = new int[4][2];
+        direction[0] = new int[]{0, 1};
+        direction[1] = new int[]{1, 0};
+        direction[2] = new int[]{0, -1};
+        direction[3] = new int[]{-1, 0};
+        List<Integer> list = new ArrayList<>();
+        int index = 0;
+        boolean[][] visited = new boolean[m][n];
+        int row = 0, col = 0;
+        for (int i = 0; i < m * n; i++) {
+            visited[row][col] = true;
+            int nextRow = row + direction[index][0], nextCol = col + direction[index][1];
+            if (nextRow < 0 || nextCol < 0 || nextRow >= m || nextCol >= n || visited[nextRow][nextCol]) {
+                index = (index + 1) % 4;
+            }
+            list.add(matrix[row][col]);
+            row += direction[index][0];
+            col += col + direction[index][1];
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
