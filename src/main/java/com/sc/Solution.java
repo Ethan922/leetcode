@@ -401,6 +401,22 @@ public class Solution {
         }
     }
 
+    // 除自身以外数组的乘积
+    public int[] productExceptSelf(int[] nums) {
+        int[] L = new int[nums.length];
+        int[] R = new int[nums.length];
+        L[0] = 1;
+        R[nums.length - 1] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            L[i] = L[i - 1] * nums[i - 1];
+            R[nums.length - i - 1] = R[nums.length - i] * nums[nums.length - i];
+        }
+        for (int i = nums.length - 1; i >= 0; i--) {
+            L[i] = L[i] * R[i];
+        }
+        return L;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
