@@ -687,6 +687,36 @@ public class Solution {
         return null;
     }
 
+    // 合并两个有序链表
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        ListNode ret = new ListNode(0);
+        ListNode list = ret;
+        ListNode p1 = list1, p2 = list2;
+        while (p1 != null && p2 != null) {
+            if (p1.val <= p2.val) {
+                list.next = new ListNode(p1.val);
+                p1 = p1.next;
+            } else {
+                list.next = new ListNode(p2.val);
+                p2 = p2.next;
+            }
+            list = list.next;
+        }
+        if (p1 == null) {
+            list.next = p2;
+        }
+        if (p2 == null) {
+            list.next = p1;
+        }
+        return ret.next;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
