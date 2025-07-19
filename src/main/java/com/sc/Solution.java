@@ -590,6 +590,25 @@ public class Solution {
         return false;
     }
 
+    // 相交链表
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        while (p1 != p2) {
+            if (p1 == null) {
+                p1 = headB;
+            }else {
+                p1 = p1.next;
+            }
+            if (p2 == null) {
+                p2 = headA;
+            }else {
+                p2 = p2.next;
+            }
+        }
+        return p1;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
