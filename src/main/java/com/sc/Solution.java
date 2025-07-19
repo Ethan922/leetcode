@@ -717,6 +717,29 @@ public class Solution {
         return ret.next;
     }
 
+    // 两数之和
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode p1 = l1;
+        ListNode p2 = l2;
+        int carry = 0;
+        ListNode ret = new ListNode(0);
+        ListNode p = ret;
+        while (p1 != null || p2 != null) {
+            p1 = p1 == null ? new ListNode(0) : p1;
+            p2 = p2 == null ? new ListNode(0) : p2;
+            int sum = p1.val + p2.val + carry;
+            carry = sum / 10;
+            p.next = new ListNode(sum % 10);
+            p = p.next;
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        if (carry > 0) {
+            p.next = new ListNode(carry);
+        }
+        return ret.next;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
