@@ -473,6 +473,57 @@ public class Solution {
         }
     }
 
+    // 矩阵置零(优化空间复杂度)
+    public void setZeroesO1(int[][] matrix) {
+        // 标记第一行是否有零
+        boolean firstRow = false;
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (matrix[0][i] == 0) {
+                firstRow = true;
+                break;
+            }
+        }
+        // 标记第一列是否有零
+        boolean firstCol = false;
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                firstCol = true;
+                break;
+            }
+        }
+        // 用首行和首列标记
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < matrix[0].length; i++) {
+            if (matrix[0][i] == 0) {
+                for (int j = 1; j < matrix.length; j++) {
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        for (int i = 1; i < matrix.length; i++) {
+            if (matrix[i][0] == 0) {
+                for (int j = 1; j < matrix[0].length; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if (firstRow) {
+            Arrays.fill(matrix[0], 0);
+        }
+        if (firstCol) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
