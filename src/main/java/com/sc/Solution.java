@@ -656,13 +656,35 @@ public class Solution {
         ListNode slow = head;
         ListNode fast = head;
         while (fast != null && fast.next != null) {
-            slow=slow.next;
-            fast=fast.next.next;
-            if (slow==fast){
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
                 return true;
             }
         }
         return false;
+    }
+
+    // 环形链表II
+    public ListNode detectCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                ListNode p = head;
+                while (slow != p) {
+                    slow = slow.next;
+                    p = p.next;
+                }
+                return p;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
