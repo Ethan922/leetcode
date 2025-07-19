@@ -342,8 +342,33 @@ public class Solution {
         return true;
     }
 
+    //        // 计算前缀和
+//        int[] prefixSum = new int[nums.length];
+//        prefixSum[0] = nums[0];
+//        for (int i = 1; i < nums.length; i++) {
+//            prefixSum[i] = prefixSum[i - 1] + nums[i];
+//        }
+
+    // BF:最大子数组和
+    public static int maxSubArray(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        // 暴力解法
+        int maxSum = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j >= 0; j--) {
+                sum += nums[j];
+                maxSum = Math.max(sum, maxSum);
+            }
+        }
+        return maxSum;
+    }
+
     public static void main(String[] args) {
-        System.out.println(minWindow("nnnnabcnnn", "cba"));
+        System.out.println(maxSubArray(new int[]{5,4,-1,7,8}));
+//        System.out.println(minWindow("nnnnabcnnn", "cba"));
 //        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
 //        for (int num : nums) {
 //            System.out.println(num);
