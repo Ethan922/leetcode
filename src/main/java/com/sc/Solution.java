@@ -417,6 +417,21 @@ public class Solution {
         return L;
     }
 
+    // 除自身以外数组的乘积(优化空间复杂度)
+    public int[] productExceptSelfO1(int[] nums) {
+        int[] L = new int[nums.length];
+        int R = 1;
+        L[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            L[i] = L[i - 1] * nums[i - 1];
+        }
+        for (int i = nums.length - 1; i >= 0; i--) {
+            L[i] = L[i] * R;
+            R *= nums[i];
+        }
+        return L;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
