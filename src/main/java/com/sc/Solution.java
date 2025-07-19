@@ -366,8 +366,24 @@ public class Solution {
         return maxSum;
     }
 
+    // DP:最大子数组和
+    public static int maxSubArrayDP(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int[] dp = new int[nums.length];
+        int maxSum = nums[0];
+        dp[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+            maxSum = Math.max(dp[i], maxSum);
+        }
+        return maxSum;
+    }
+
     public static void main(String[] args) {
-        System.out.println(maxSubArray(new int[]{5,4,-1,7,8}));
+        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
+//        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(minWindow("nnnnabcnnn", "cba"));
 //        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
 //        for (int num : nums) {
