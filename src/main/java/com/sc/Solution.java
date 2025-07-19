@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Solution {
 
+    // 两数之和
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -15,6 +16,7 @@ public class Solution {
         return new int[]{0, 1};
     }
 
+    // 字母异位次分组
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strs) {
@@ -27,7 +29,7 @@ public class Solution {
         }
         return new ArrayList<>(map.values());
     }
-
+    // 字母异位次分组
     public List<List<String>> groupAnagrams1(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String str : strs) {
@@ -41,6 +43,7 @@ public class Solution {
     }
 
 
+    // 最长连续序列
     public int longestConsecutive(int[] nums) {
         Set<Integer> set = new HashSet<>();
         for (int num : nums) {
@@ -62,6 +65,7 @@ public class Solution {
         return max;
     }
 
+    // 移动零
     public void moveZeroes(int[] nums) {
         int i = 0;
         for (int k = 0; k < nums.length; k++) {
@@ -74,6 +78,7 @@ public class Solution {
         }
     }
 
+    // 盛水最多的容器
     public int maxArea(int[] height) {
         int max = 0;
         int i = 0, j = height.length - 1;
@@ -91,13 +96,13 @@ public class Solution {
         return max;
     }
 
+    // 三数之和
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> ret = new ArrayList<>();
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 1; i++) {
             // 去重
             if (i != 0 && nums[i] == nums[i - 1]) {
-                i++;
                 continue;
             }
             int j = i + 1, k = nums.length - 1;
@@ -121,6 +126,7 @@ public class Solution {
         return ret;
     }
 
+    // 接雨水
     public int trap(int[] height) {
         int n = height.length;
         if (n == 0) {
@@ -141,6 +147,7 @@ public class Solution {
         return ans;
     }
 
+    // 无重复字符的最长子串
     public int lengthOfLongestSubstring(String s) {
         int left = 0;
         int len = 0;
@@ -154,7 +161,7 @@ public class Solution {
         }
         return len;
     }
-
+    // 找到字符串中所有字母异位词
     public static List<Integer> findAnagrams(String s, String p) {
         char[] pArr = countChar(p);
         int pLen = p.length();
@@ -190,6 +197,7 @@ public class Solution {
         return countArr;
     }
 
+    // 和为k的子数组
     public int subarraySum(int[] nums, int k) {
         int sum = 0;
         int count = 0;
@@ -205,24 +213,7 @@ public class Solution {
         return count;
     }
 
-    public int test(int[] height) {
-        int n = height.length;
-        int[] leftMax = new int[n];
-        int[] rightMax = new int[n];
-        leftMax[0] = height[0];
-        rightMax[n - 1] = height[n - 1];
-        for (int i = 1, j = n - 1; i < n && j >= 0; i++, j--) {
-            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
-            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
-        }
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            ans += Math.min(leftMax[i], rightMax[i]) - height[i];
-        }
-        return ans;
-
-    }
-
+    // 滑动窗口的最大值
     public static int[] maxSlidingWindow(int[] nums, int k) {
         int[] maxArr = new int[nums.length - k + 1];
         int max = findMax(0, k, nums);
@@ -271,7 +262,7 @@ public class Solution {
         return maxArr;
     }
 
-    // 最小覆盖字串
+    // 最小覆盖子串
     public static String minWindow(String s, String t) {
         int sLen = s.length();
         int tLen = t.length();
@@ -341,13 +332,6 @@ public class Solution {
         }
         return true;
     }
-
-    //        // 计算前缀和
-//        int[] prefixSum = new int[nums.length];
-//        prefixSum[0] = nums[0];
-//        for (int i = 1; i < nums.length; i++) {
-//            prefixSum[i] = prefixSum[i - 1] + nums[i];
-//        }
 
     // BF:最大子数组和
     public static int maxSubArray(int[] nums) {
