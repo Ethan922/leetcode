@@ -384,6 +384,23 @@ public class Solution {
         return ret.toArray(new int[ret.size()][]);
     }
 
+    public void rotate(int[] nums, int k) {
+        k = k % nums.length;
+        reverseArr(nums, 0, nums.length - 1);
+        reverseArr(nums, 0, k - 1);
+        reverseArr(nums, k, nums.length - 1);
+    }
+
+    private void reverseArr(int[] arr, int start, int end) {
+        while (start <= end) {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
