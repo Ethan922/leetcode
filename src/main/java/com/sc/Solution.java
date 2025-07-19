@@ -555,11 +555,11 @@ public class Solution {
         // 水平翻转
         int up = 0;
         int down = matrix.length - 1;
-        while (up < down){
+        while (up < down) {
             for (int j = 0; j < matrix[0].length; j++) {
-                int temp=matrix[up][j];
-                matrix[up][j]=matrix[down][j];
-                matrix[down][j]=temp;
+                int temp = matrix[up][j];
+                matrix[up][j] = matrix[down][j];
+                matrix[down][j] = temp;
             }
             up++;
             down--;
@@ -567,11 +567,27 @@ public class Solution {
         // 主对角线翻转
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < i; j++) {
-                int temp=matrix[i][j];
-                matrix[i][j]=matrix[j][i];
-                matrix[j][i]=temp;
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
         }
+    }
+
+    // 搜索二维矩阵
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int i = 0;
+        int j = matrix[0].length - 1;
+        while (i < matrix.length && j >= 0) {
+            if (matrix[i][j] < target) {
+                i++;
+            } else if (matrix[i][j] > target) {
+                j--;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
