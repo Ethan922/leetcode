@@ -432,6 +432,27 @@ public class Solution {
         return L;
     }
 
+    // 缺失的第一个正数
+    public int firstMissingPositive(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] <= 0) {
+                nums[i] = nums.length + 1;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int num = Math.abs(nums[i]);
+            if (num <= nums.length) {
+                nums[num - 1] = -Math.abs(nums[num - 1]);
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return nums.length + 1;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
