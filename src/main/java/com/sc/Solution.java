@@ -597,16 +597,32 @@ public class Solution {
         while (p1 != p2) {
             if (p1 == null) {
                 p1 = headB;
-            }else {
+            } else {
                 p1 = p1.next;
             }
             if (p2 == null) {
                 p2 = headA;
-            }else {
+            } else {
                 p2 = p2.next;
             }
         }
         return p1;
+    }
+
+    // 反转链表
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
     }
 
     public static void main(String[] args) {
