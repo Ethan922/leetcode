@@ -453,6 +453,26 @@ public class Solution {
         return nums.length + 1;
     }
 
+    // 矩阵置零
+    public void setZeroes(int[][] matrix) {
+        List<int[]> list = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 0) {
+                    list.add(new int[]{i, j});
+                }
+            }
+        }
+        for (int[] index : list) {
+            int row = index[0];
+            int col = index[1];
+            Arrays.fill(matrix[row], 0);
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][col] = 0;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
