@@ -788,6 +788,26 @@ public class Solution {
         return maxProfit;
     }
 
+    // 跳跃游戏
+    public boolean canJump(int[] nums) {
+        if (nums.length == 1) {
+            return true;
+        }
+        int max = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            // 判断当前位置是否可达
+            if (i <= max) {
+                max = Math.max(max, i + nums[i]);
+                if (max >= nums.length - 1) {
+                    return true;
+                }
+            }else {
+                break;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
