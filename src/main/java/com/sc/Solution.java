@@ -740,6 +740,43 @@ public class Solution {
         return ret.next;
     }
 
+    // 删除链表的倒数第 N 个结点
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+//        if (head.next == null) {
+//            return null;
+//        }
+//        ListNode p = head;
+//        for (int i = 0; i < n; i++) {
+//            p = p.next;
+//        }
+//        if (p == null) {
+//            return head.next;
+//        }
+//        ListNode p1 = head;
+//        while (p.next != null) {
+//            p = p.next;
+//            p1 = p1.next;
+//        }
+//        p1.next = p1.next.next;
+//        return head;
+        if (head.next == null) {
+            return null;
+        }
+        ListNode dummyNode = new ListNode(0);
+        dummyNode.next = head;
+        ListNode p = dummyNode;
+        for (int i = 0; i < n; i++) {
+            p = p.next;
+        }
+        ListNode p1 = dummyNode;
+        while (p.next != null) {
+            p = p.next;
+            p1 = p1.next;
+        }
+        p1.next = p1.next.next;
+        return dummyNode.next;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
