@@ -625,6 +625,29 @@ public class Solution {
         return pre;
     }
 
+    // 回文链表
+    public boolean isPalindrome(ListNode head) {
+        if (head.next == null) {
+            return true;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode list = reverseList(slow);
+        ListNode p = head;
+        while (p != null && list != null) {
+            if (p.val != list.val) {
+                return false;
+            }
+            p = p.next;
+            list = list.next;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
