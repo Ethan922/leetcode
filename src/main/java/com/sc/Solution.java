@@ -817,8 +817,26 @@ public class Solution {
         return slow;
     }
 
+    // 长度最小的子数组
+    public static int minSubArrayLen(int target, int[] nums) {
+        int sum = 0;
+        int l = 0, r = 0;
+        int minLen = Integer.MAX_VALUE;
+        while (r < nums.length) {
+            sum += nums[r];
+            while (sum >= target && l <= r) {
+                minLen = Math.min(r - l + 1, minLen);
+                sum -= nums[l];
+                l++;
+            }
+            r++;
+        }
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+    }
+
     public static void main(String[] args) {
-        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
+        minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
+//        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(minWindow("nnnnabcnnn", "cba"));
 //        int[] nums = maxSlidingWindow(new int[]{4, -2}, 2);
