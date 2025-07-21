@@ -834,6 +834,23 @@ public class Solution {
         return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
 
+    // 乘积小于k的子数组
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int l = 0, r = 0;
+        int product = 1;
+        int count = 0;
+        while (r < nums.length) {
+            product *= nums[r];
+            while (product >= k && l <= r) {
+                product /= nums[l];
+                l++;
+            }
+            count += r - l + 1;
+            r++;
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
