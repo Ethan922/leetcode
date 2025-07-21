@@ -889,6 +889,35 @@ public class Solution {
         return r;
     }
 
+    // k个一组反转链表
+    public ListNode reverseKGroup(ListNode head, int k) {
+        int count = 0;
+        ListNode p = head;
+        while (p != null) {
+            count++;
+            p = p.next;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p0 = dummy;
+        ListNode pre = null;
+        ListNode curr = p0.next;
+        while (count >= k) {
+            count -= k;
+            for (int i = 0; i < k; i++) {
+                ListNode next = curr.next;
+                curr.next = pre;
+                pre = curr;
+                curr = next;
+            }
+            ListNode next=p0.next;
+            p0.next.next = curr;
+            p0.next = pre;
+            p0 = next;
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
