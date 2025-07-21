@@ -875,6 +875,20 @@ public class Solution {
         return new int[]{first, last};
     }
 
+    // 寻找峰值
+    public int findPeakElement(int[] nums) {
+        int l = 0, r = nums.length - 2;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > nums[mid + 1]) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return r;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
