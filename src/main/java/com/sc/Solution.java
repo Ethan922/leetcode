@@ -282,28 +282,13 @@ public class Solution {
         }
         // 左指针，指向滑动窗口的左边界
         int l = 0;
-        int maxRight = sLen;
-        // 预处理s,如果l指向的字符不在tMap内则直接跳过
-        for (int i = 0; i < sLen; i++) {
-            if (!tMap.containsKey(s.charAt(l))) {
-                l++;
-            } else {
-                break;
-            }
-        }
-        for (int i = sLen - 1; i >= l; i--) {
-            if (!tMap.containsKey(s.charAt(i))) {
-                maxRight--;
-            } else {
-                break;
-            }
-        }
-        if (l == s.length()) {
-            return "";
-        }
         int r = l;
         int minLen = sLen + 1, ansL = -1, ansR = -1;
-        while (r < maxRight) {
+        while (r < sLen) {
+            if (!tMap.containsKey(s.charAt(r))) {
+                r++;
+                continue;
+            }
             sMap.put(s.charAt(r), sMap.getOrDefault(s.charAt(r), 0) + 1);
             // 滑动窗口包含全部字符
             while (check(sMap, tMap) && l <= r) {
