@@ -960,6 +960,26 @@ public class Solution {
         return ret.next;
     }
 
+    // 随机链表的复制(优化)
+    public Node copyRandomListOptimize(Node head) {
+        if (head == null) {
+            return null;
+        }
+        HashMap<Node, Node> map = new HashMap<>();
+        Node p1 = head;
+        while (p1 != null) {
+            map.put(p1, new Node(p1.val));
+            p1 = p1.next;
+        }
+        p1 = head;
+        while (p1 != null) {
+            map.get(p1).next = map.get(p1.next);
+            map.get(p1).random = map.get(p1.random);
+            p1 = p1.next;
+        }
+        return map.get(head);
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
