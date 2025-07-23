@@ -1,19 +1,24 @@
 package com.sc;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LRUCache {
+public class LRUCacheWithExpireTime {
 
     int capacity;
 
-    int size = 0;
+    int size;
+
+    long ttl = 20L;
 
     Map<Integer, Node> cache;
 
     static class Node {
         int key;
         int val;
+        long timestamp;
         Node prev;
         Node next;
 
@@ -30,7 +35,7 @@ public class LRUCache {
 
     Node tail;
 
-    public LRUCache(int capacity) {
+    public LRUCacheWithExpireTime(int capacity) {
         cache = new HashMap<>();
         this.capacity = capacity;
         this.size = 0;
@@ -45,6 +50,15 @@ public class LRUCache {
         if (node == null) {
             return -1;
         }
+        long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        long timestamp = node.timestamp;
+        if (now > timestamp) {
+            // 数据过期
+            Node removedNode = removeNode(node);
+            cache.remove(removedNode.key);
+            return -1;
+        }
+        refreshTtl(node);
         moveToHead(node);
         return node.val;
     }
@@ -60,13 +74,21 @@ public class LRUCache {
             node = new Node(key, value);
             cache.put(key, node);
             addToHead(node);
+            refreshTtl(node);
             size++;
         } else {
             node.val = value;
             moveToHead(node);
+            refreshTtl(node);
             cache.put(key, node);
         }
     }
+
+    // 刷新节点的有效期
+    public void refreshTtl(Node node) {
+        node.timestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + ttl;
+    }
+
 
     // 将节点添加到链表头部
     public void addToHead(Node node) {
@@ -105,3 +127,4 @@ public class LRUCache {
         System.out.println(lRUCache.get(4));    // 返回 4
     }
 }
+
