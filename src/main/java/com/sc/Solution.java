@@ -1007,6 +1007,19 @@ public class Solution {
         return ret;
     }
 
+    private static List<Integer> ret = new ArrayList<>();
+
+    // 二叉树的中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) {
+            return ret;
+        }
+        inorderTraversal(root.left);
+        ret.add(root.val);
+        inorderTraversal(root.right);
+        return ret;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
