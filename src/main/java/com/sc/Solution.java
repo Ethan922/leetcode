@@ -998,6 +998,16 @@ public class Solution {
         return ret.next;
     }
 
+    // 合并K个升序链表
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode ret = null;
+        for (ListNode list : lists) {
+            ret = mergeTwoLists(ret, list);
+        }
+        return ret;
+    }
+
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
