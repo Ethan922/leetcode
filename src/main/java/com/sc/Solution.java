@@ -910,12 +910,19 @@ public class Solution {
                 pre = curr;
                 curr = next;
             }
-            ListNode next=p0.next;
+            ListNode next = p0.next;
             p0.next.next = curr;
             p0.next = pre;
             p0 = next;
         }
         return dummy.next;
+    }
+
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        return reverseKGroup(head,2);
     }
 
     public static void main(String[] args) {
