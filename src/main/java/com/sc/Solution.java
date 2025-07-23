@@ -918,11 +918,46 @@ public class Solution {
         return dummy.next;
     }
 
+    // 两两交换链表中的节点
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
-        return reverseKGroup(head,2);
+        return reverseKGroup(head, 2);
+    }
+
+    // 随机链表的复制
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return null;
+        }
+        HashMap<Node, Integer> map = new HashMap<>();
+        HashMap<Integer, Node> map1 = new HashMap<>();
+        Node p1 = head;
+        Node ret = new Node(0);
+        Node p2 = ret;
+        int index = 0;
+        while (p1 != null) {
+            p2.next = new Node(p1.val);
+            p2 = p2.next;
+            map.put(p1, index);
+            map1.put(index, p2);
+            index++;
+            p1 = p1.next;
+        }
+        // 记录随机节点的索引
+        List<Integer> randomNodeIndexList = new ArrayList<>();
+        p1 = head;
+        while (p1 != null) {
+            randomNodeIndexList.add(map.get(p1.random));
+            p1 = p1.next;
+        }
+        p2 = ret.next;
+        for (Integer randomNodeIndex : randomNodeIndexList) {
+            p2.random = map1.get(randomNodeIndex);
+            p2 = p2.next;
+        }
+        return ret.next;
     }
 
     public static void main(String[] args) {
