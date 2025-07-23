@@ -980,6 +980,24 @@ public class Solution {
         return map.get(head);
     }
 
+    // 排序链表
+    public ListNode sortList(ListNode head) {
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.val));
+        ListNode p = head;
+        while (p != null) {
+            queue.offer(p);
+            p = p.next;
+        }
+        ListNode ret = new ListNode(0);
+        p = ret;
+        while (!queue.isEmpty()) {
+            p.next = queue.poll();
+            p = p.next;
+        }
+        p.next = null;
+        return ret.next;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
