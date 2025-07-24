@@ -1300,6 +1300,27 @@ public class Solution {
         root = ans.right;
     }
 
+    Map<Integer, Integer> map = new HashMap<>();
+
+    // 从前序与中序遍历序列构造二叉树
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return buildTree(preorder, inorder, 0, inorder.length - 1, 0, inorder.length - 1);
+    }
+
+
+    public TreeNode buildTree(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+        if (preorderLeft > preorderRight) {
+            return null;
+        }
+        int rootIndex = map.get(preorder[preorderLeft]);
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
+        root.left = buildTree(preorder, inorder, preorderLeft + 1, rootIndex - inorderLeft + preorderLeft, inorderLeft, rootIndex - 1);
+        root.right = buildTree(preorder, inorder, preorderLeft + rootIndex - inorderLeft + 1, preorderRight, rootIndex + 1, inorderRight);
+        return root;
+    }
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
