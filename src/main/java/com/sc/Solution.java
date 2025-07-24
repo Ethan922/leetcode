@@ -1066,6 +1066,17 @@ public class Solution {
         return ans;
     }
 
+    // 翻转二叉树 递归写法
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode left = invertTree(root.left);
+        root.left = invertTree(root.right);
+        root.right = left;
+        return root;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
