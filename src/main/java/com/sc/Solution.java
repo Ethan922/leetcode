@@ -1036,6 +1036,11 @@ public class Solution {
         return ret;
     }
 
+    // 二叉树的最大深度 递归写法
+    public int maxDepth(TreeNode root) {
+        return root == null ? 0 : Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
