@@ -1007,9 +1007,9 @@ public class Solution {
         return ret;
     }
 
-    private static List<Integer> ret = new ArrayList<>();
+    private List<Integer> ret = new ArrayList<>();
 
-    // 二叉树的中序遍历
+    // 二叉树的中序遍历 递归写法
     public List<Integer> inorderTraversal(TreeNode root) {
         if (root == null) {
             return ret;
@@ -1017,6 +1017,22 @@ public class Solution {
         inorderTraversal(root.left);
         ret.add(root.val);
         inorderTraversal(root.right);
+        return ret;
+    }
+
+    // 二叉树的中序遍历 迭代写法
+    public List<Integer> inorderTraversalIteration(TreeNode root) {
+        List<Integer> ret = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            ret.add(root.val);
+            root = root.right;
+        }
         return ret;
     }
 
