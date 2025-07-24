@@ -1277,6 +1277,29 @@ public class Solution {
         return ans;
     }
 
+    // 二叉树展开为链表
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        TreeNode ans = new TreeNode();
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            ans.right = node;
+            ans.left = null;
+            ans = node;
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+        }
+        root = ans.right;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
