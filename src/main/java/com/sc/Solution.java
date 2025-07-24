@@ -1232,6 +1232,24 @@ public class Solution {
         return node;
     }
 
+    // 二叉搜索树中第 K 小的元素
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> stack = new Stack<>();
+        int count = 1;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (count == k) {
+                return root.val;
+            }
+            root = root.right;
+        }
+        return 0;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
