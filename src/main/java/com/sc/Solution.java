@@ -1163,6 +1163,24 @@ public class Solution {
         return true;
     }
 
+    int ans = 0;
+
+    // 二叉树的直径
+    public int diameterOfBinaryTree(TreeNode root) {
+        depth(root);
+        return ans;
+    }
+
+    public int depth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int l = depth(root.left);
+        int r = depth(root.right);
+        ans = Math.max(ans, l + r);
+        return Math.max(l, r) + 1;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
