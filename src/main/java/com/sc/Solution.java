@@ -1343,6 +1343,22 @@ public class Solution {
         return false;
     }
 
+    // 搜索插入的位置
+    public int searchInsert(int[] nums, int target) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > target) {
+                r = mid - 1;
+            } else if (nums[mid] < target) {
+                l = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return l;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
