@@ -559,8 +559,8 @@ public class Solution {
         }
     }
 
-    // 搜索二维矩阵
-    public boolean searchMatrix(int[][] matrix, int target) {
+    // 搜索二维矩阵II
+    public boolean searchMatrixII(int[][] matrix, int target) {
         int i = 0;
         int j = matrix[0].length - 1;
         while (i < matrix.length && j >= 0) {
@@ -1320,6 +1320,27 @@ public class Solution {
         root.left = buildTree(preorder, inorder, preorderLeft + 1, rootIndex - inorderLeft + preorderLeft, inorderLeft, rootIndex - 1);
         root.right = buildTree(preorder, inorder, preorderLeft + rootIndex - inorderLeft + 1, preorderRight, rootIndex + 1, inorderRight);
         return root;
+    }
+
+    // 搜索二维矩阵
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int total = m * n;
+        int l = 0, r = total - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            int row = mid / n;
+            int col = mid % n;
+            if (matrix[row][col] > target) {
+                r = mid - 1;
+            } else if (matrix[row][col] < target) {
+                l = mid + 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
