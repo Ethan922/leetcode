@@ -1215,6 +1215,23 @@ public class Solution {
         return true;
     }
 
+    // 将有序数组转换为二叉搜索树
+    public TreeNode sortedArrayToBST(int[] nums) {
+        // 二叉搜索树的中序遍历结果是升序的
+        return sortedArrayToBST(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode sortedArrayToBST(int[] nums, int l, int r) {
+        if (l < r) {
+            return null;
+        }
+        int mid = (l + r) / 2;
+        TreeNode node = new TreeNode(nums[mid]);
+        node.left = sortedArrayToBST(nums, l, mid - 1);
+        node.right = sortedArrayToBST(nums, mid + 1, r);
+        return node;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
