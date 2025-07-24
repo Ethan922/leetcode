@@ -1077,6 +1077,28 @@ public class Solution {
         return root;
     }
 
+    // 翻转二叉树 迭代写法
+    public TreeNode invertTreeIteration(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        return root;
+    }
+
     // 二叉树的层序遍历
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
