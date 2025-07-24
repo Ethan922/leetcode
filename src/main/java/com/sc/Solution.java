@@ -1141,6 +1141,28 @@ public class Solution {
         return left.val == right.val && check(left.left, left.right) && check(right.left, right.right);
     }
 
+    // 对称二叉树 迭代写法
+    public boolean isSymmetricIteration(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode l = queue.poll();
+            TreeNode r = queue.poll();
+            if (l == null && r == null) {
+                continue;
+            }
+            if (l == null || r == null || l.val != r.val) {
+                return false;
+            }
+            queue.offer(l.left);
+            queue.offer(r.right);
+            queue.offer(l.right);
+            queue.offer(r.left);
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
