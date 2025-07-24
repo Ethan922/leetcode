@@ -1359,6 +1359,20 @@ public class Solution {
         return l;
     }
 
+    // 寻找旋转排序数组中的最小值
+    public int findMin(int[] nums) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] < nums[r]) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return nums[r];
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
