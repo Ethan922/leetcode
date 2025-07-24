@@ -1196,6 +1196,25 @@ public class Solution {
         return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 
+    // 验证二叉搜索树 迭代写法
+    public boolean isValidBSTIteration(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        double rootVal = -Double.MAX_VALUE;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            if (root.val < rootVal) {
+                return false;
+            }
+            rootVal = root.val;
+            root = root.right;
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
