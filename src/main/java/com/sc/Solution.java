@@ -1382,7 +1382,7 @@ public class Solution {
         }
         ListNode head2 = reverseListForReorder(slow);
         ListNode head1 = head;
-        while (head2 != null) {
+        while (head2.next != null) {
             ListNode next1 = head1.next;
             ListNode next2 = head2.next;
             head1.next = head2;
