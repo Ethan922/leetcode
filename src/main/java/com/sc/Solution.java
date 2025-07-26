@@ -1373,6 +1373,37 @@ public class Solution {
         return nums[r];
     }
 
+    // 重排链表
+    public void reorderList(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode head2 = reverseListForReorder(slow);
+        ListNode head1 = head;
+        while (head2 != null) {
+            ListNode next1 = head1.next;
+            ListNode next2 = head2.next;
+            head1.next = head2;
+            head2.next = next1;
+            head1 = next1;
+            head2 = next2;
+        }
+    }
+
+    private ListNode reverseListForReorder(ListNode head) {
+        ListNode pre = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
