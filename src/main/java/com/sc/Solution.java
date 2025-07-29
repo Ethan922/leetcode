@@ -1441,6 +1441,22 @@ public class Solution {
         return right;
     }
 
+    // 二叉搜索树的最近公共祖先
+    public TreeNode lowestCommonAncestorBST(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        // p和q的值都小于当前节点的值，则最近公共祖先在左子树中
+        if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestorBST(root.left, p, q);
+        }
+        // p和q的值都大于当前节点的值，则最近公共祖先在右子树中
+        if (p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestorBST(root.right, p, q);
+        }
+        return root;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
