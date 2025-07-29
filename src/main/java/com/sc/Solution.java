@@ -1553,6 +1553,85 @@ public class Solution {
         return Math.max(Math.max(l, r) + root.val, 0);
     }
 
+    // 字符串相乘
+    public static String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        List<Character> list1 = toCharList(num1);
+        List<Character> list2 = toCharList(num2);
+        List<Character> ret = new ArrayList<>();
+        int size = list2.size();
+        for (int i = size - 1; i >= 0; i--) {
+            List<Character> list = fillZero(list1, size - i - 1);
+            List<Character> product = multiply(list, list2.get(i));
+            ret = add(product, ret);
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        ret.forEach(stringBuilder::append);
+        return stringBuilder.toString();
+    }
+
+    private static List<Character> add(List<Character> list1, List<Character> list2) {
+        if (list1.isEmpty()) {
+            return new ArrayList<>(list2);
+        }
+        if (list2.isEmpty()) {
+            return new ArrayList<>(list1);
+        }
+        int carry = 0;
+        List<Character> list = new ArrayList<>();
+        int i = list1.size() - 1, j = list2.size() - 1;
+        while (i >= 0 || j >= 0) {
+            int num1, num2, sum;
+            num1 = i < 0 ? 0 : list1.get(i) - '0';
+            num2 = j < 0 ? 0 : list2.get(j) - '0';
+            sum = num1 + num2 + carry;
+            carry = sum / 10;
+            list.add((char) (sum % 10 + '0'));
+            i--;
+            j--;
+        }
+        if (carry > 0) {
+            list.add((char) (carry + '0'));
+        }
+        Collections.reverse(list);
+        return list;
+    }
+
+    private static List<Character> fillZero(List<Character> list, int count) {
+        List<Character> ans = new ArrayList<>(list);
+        for (int i = 0; i < count; i++) {
+            ans.add('0');
+        }
+        return ans;
+    }
+
+    private static List<Character> multiply(List<Character> list, char c) {
+        if (c == '0') {
+            return Collections.singletonList('0');
+        }
+        List<Character> ans = new ArrayList<>();
+        int carry = 0;
+        for (int i = list.size() - 1; i >= 0; i--) {
+            int product = (list.get(i) - '0') * (c - '0') + carry;
+            carry = product / 10;
+            ans.add((char) (product % 10 + '0'));
+        }
+        if (carry > 0) {
+            ans.add((char) (carry + '0'));
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+
+    private static List<Character> toCharList(String s) {
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            list.add(s.charAt(i));
+        }
+        return list;
+    }
 
     // 测试反射修改private final修饰的字段
     public static void test(Integer integer, String string) throws NoSuchFieldException, IllegalAccessException {
@@ -1566,13 +1645,14 @@ public class Solution {
     }
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        Integer i = Integer.valueOf(2);
-        String s = "abc";
-        test(i, s);
-        System.out.println(s);
-        System.out.println("abc");
-        System.out.println(i);
-        System.out.println(Integer.valueOf(2));
+        System.out.println(multiply("123", "456"));
+//        Integer i = Integer.valueOf(2);
+//        String s = "abc";
+//        test(i, s);
+//        System.out.println(s);
+//        System.out.println("abc");
+//        System.out.println(i);
+//        System.out.println(Integer.valueOf(2));
 //        minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
