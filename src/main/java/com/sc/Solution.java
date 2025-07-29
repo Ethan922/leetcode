@@ -1,5 +1,6 @@
 package com.sc;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class Solution {
@@ -1510,8 +1511,26 @@ public class Solution {
         return ans;
     }
 
-    public static void main(String[] args) {
-        minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
+    // 测试反射修改private final修饰的字段
+    public static void test(Integer integer, String string) throws NoSuchFieldException, IllegalAccessException {
+        Field integerValue = integer.getClass().getDeclaredField("value");
+        integerValue.setAccessible(true);
+        // 直接操作对象内存中值，绕过private final限制
+        integerValue.setInt(integer, 3);
+        Field stringValue = String.class.getDeclaredField("value");
+        stringValue.setAccessible(true);
+        stringValue.set(string, new char[]{'a'});
+    }
+
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Integer i = Integer.valueOf(2);
+        String s = "abc";
+        test(i, s);
+        System.out.println(s);
+        System.out.println("abc");
+        System.out.println(i);
+        System.out.println(Integer.valueOf(2));
+//        minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(minWindow("nnnnabcnnn", "cba"));
