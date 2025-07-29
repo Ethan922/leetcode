@@ -1420,6 +1420,27 @@ public class Solution {
         return head;
     }
 
+    // 二叉树的最近公共祖先
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 当前节点为空或为p或为q，返回当前节点
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        // 递归查找左右子树中的p或q
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        // 左右子树中都查找到，则当前节点是最近公共祖先
+        if (left != null && right != null) {
+            return root;
+        }
+        // 左子树中查找到，右子树中未查到，则最近公共祖先是左子树递归的结果
+        if (left != null) {
+            return left;
+        }
+        // 左子树中未查到，右子树中查找到，则最近公共祖先是右子树递归的结果
+        return right;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
