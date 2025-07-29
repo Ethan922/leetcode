@@ -1489,6 +1489,27 @@ public class Solution {
         return ans;
     }
 
+    // 找到左下角的值
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int tmp = size;
+            while (tmp > 0) {
+                TreeNode node = queue.poll();
+                if (tmp == size) {
+                    ans = node.val;
+                }
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+                tmp--;
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
