@@ -1511,6 +1511,30 @@ public class Solution {
         return ans;
     }
 
+    // 路径总和III
+    Map<Long, Integer> prefixSumMap = new HashMap<>();
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        prefixSumMap.put(0L, 1);
+        return pathSumDFS(root, 0, targetSum);
+    }
+
+    public int pathSumDFS(TreeNode root, long currSum, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        currSum += root.val;
+        int count = prefixSumMap.getOrDefault(currSum - targetSum, 0);
+        prefixSumMap.put(currSum, prefixSumMap.getOrDefault(currSum, 0) + 1);
+        count += pathSumDFS(root.left, currSum, targetSum);
+        count += pathSumDFS(root.right, currSum, targetSum);
+        prefixSumMap.put(currSum, prefixSumMap.getOrDefault(currSum, 0) - 1);
+        return count;
+    }
+
+
     // 测试反射修改private final修饰的字段
     public static void test(Integer integer, String string) throws NoSuchFieldException, IllegalAccessException {
         Field integerValue = integer.getClass().getDeclaredField("value");
