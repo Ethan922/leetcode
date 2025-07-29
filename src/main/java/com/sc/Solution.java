@@ -1513,6 +1513,7 @@ public class Solution {
 
     // 路径总和III
     Map<Long, Integer> prefixSumMap = new HashMap<>();
+
     public int pathSum(TreeNode root, int targetSum) {
         if (root == null) {
             return 0;
@@ -1532,6 +1533,24 @@ public class Solution {
         count += pathSumDFS(root.right, currSum, targetSum);
         prefixSumMap.put(currSum, prefixSumMap.getOrDefault(currSum, 0) - 1);
         return count;
+    }
+
+    // 最大路径和
+    int maxPathSum = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        maxPathSumDFS(root);
+        return maxPathSum;
+    }
+
+    public int maxPathSumDFS(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int l = maxPathSumDFS(root.left);
+        int r = maxPathSumDFS(root.right);
+        maxPathSum = Math.max(l + r + root.val, maxPathSum);
+        return Math.max(Math.max(l, r) + root.val, 0);
     }
 
 
