@@ -30,4 +30,20 @@ public class Solution491 {
             path.remove(path.size() - 1);
         }
     }
+
+    private void backTracking2(int[] nums, int startIndex) {
+        if (path.size() >= 2) {
+            ans.add(new ArrayList<>(path));
+        }
+        boolean[] used = new boolean[201];
+        for (int i = startIndex; i < nums.length; i++) {
+            if (used[nums[i] < 0 ? nums[i] + 201 : nums[i]] || (!path.isEmpty() && nums[i] < path.get(path.size() - 1))) {
+                continue;
+            }
+            used[nums[i] < 0 ? nums[i] + 201 : nums[i]] = true;
+            path.add(nums[i]);
+            backTracking(nums, i + 1);
+            path.remove(path.size() - 1);
+        }
+    }
 }
