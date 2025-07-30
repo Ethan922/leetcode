@@ -35,11 +35,11 @@ public class Solution79 {
         for (int[] direction : directions) {
             found = backtracking(board, word, i + direction[0], j + direction[1], index + 1);
             if (found){
-                break;
+                return true;
             }
         }
         visited[i][j] = false;
-        return found;
+        return false;
     }
 
 }
