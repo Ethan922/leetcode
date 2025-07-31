@@ -1649,7 +1649,52 @@ public class Solution {
             nums[j] = temp;
         }
         reverseArr(nums, i + 1, nums.length - 1);
+    }
 
+    // 颜色分类
+    public static void sortColors(int[] nums) {
+        int p0 = 0, p1 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 1) {
+                swap(nums, i, p1);
+                p1++;
+            } else if (nums[i] == 0) {
+                swap(nums, i, p0);
+                if (p0 < p1) {
+                    swap(nums, i, p1);
+                }
+                p0++;
+                p1++;
+            }
+        }
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    // 多数元素
+    public int majorityElement(int[] nums) {
+        while (true) {
+            Random random = new Random();
+            int i = random.nextInt(nums.length);
+            int count = count(nums, nums[i]);
+            if (count > nums.length / 2) {
+                return nums[i];
+            }
+        }
+    }
+
+    private int count(int[] nums, int n) {
+        int count = 0;
+        for (int num : nums) {
+            if (num == n) {
+                count++;
+            }
+        }
+        return count;
     }
 
     // 测试反射修改private final修饰的字段
