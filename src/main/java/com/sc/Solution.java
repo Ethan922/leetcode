@@ -1633,6 +1633,25 @@ public class Solution {
         return list;
     }
 
+    // 下一个排列
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[i] >= nums[j]) {
+                j--;
+            }
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+        reverseArr(nums, i + 1, nums.length - 1);
+
+    }
+
     // 测试反射修改private final修饰的字段
     public static void test(Integer integer, String string) throws NoSuchFieldException, IllegalAccessException {
         Field integerValue = integer.getClass().getDeclaredField("value");
