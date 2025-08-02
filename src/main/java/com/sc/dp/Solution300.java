@@ -1,4 +1,4 @@
-package com.sc.backtrack;
+package com.sc.dp;
 
 public class Solution300 {
     // 最长递增子序列
