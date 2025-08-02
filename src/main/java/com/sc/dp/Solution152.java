@@ -1,7 +1,7 @@
 package com.sc.dp;
 
 public class Solution152 {
-    //
+    //乘积最大的子数组
     public int maxProduct(int[] nums) {
         int[][] dp = new int[nums.length][2];
         int max = nums[0];
