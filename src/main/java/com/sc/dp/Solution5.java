@@ -2,6 +2,40 @@ package com.sc.dp;
 
 public class Solution5 {
     // 最长回文子串
+    public String longestPalindromeDP(String s) {
+        if (s.length() == 1) {
+            return s;
+        }
+        char[] chars = s.toCharArray();
+        int n = chars.length;
+        boolean[][] dp = new boolean[n][n];
+        int max = 0;
+        String ans = "";
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                if (chars[i] == chars[j]) {
+                    if (j - i <= 1) {
+                        dp[i][j] = true;
+                        if (j - i + 1 > max) {
+                            max = j - i + 1;
+                            ans = s.substring(i, j + 1);
+                        }
+                    } else {
+                        if (dp[i + 1][j - 1]) {
+                            dp[i][j] = true;
+                            if (j - i + 1 > max) {
+                                max = j - i + 1;
+                                ans = s.substring(i, j + 1);
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return ans;
+    }
+
     public String longestPalindrome(String s) {
         if (s.length() < 2) {
             return s;
