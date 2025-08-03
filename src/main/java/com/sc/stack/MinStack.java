@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.stack;
 
 import java.util.Stack;
 
