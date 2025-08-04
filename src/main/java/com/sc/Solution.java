@@ -983,20 +983,19 @@ public class Solution {
 
     // 排序链表
     public ListNode sortList(ListNode head) {
-        PriorityQueue<ListNode> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.val));
-        ListNode p = head;
-        while (p != null) {
-            queue.offer(p);
-            p = p.next;
+        if (head == null || head.next == null) return head;
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        ListNode ret = new ListNode(0);
-        p = ret;
-        while (!queue.isEmpty()) {
-            p.next = queue.poll();
-            p = p.next;
-        }
-        p.next = null;
-        return ret.next;
+        ListNode right = slow.next;
+        slow.next = null;
+        ListNode left = sortList(head);
+        ListNode list = sortList(right);
+        mergeTwoLists(left, list);
+        return head;
     }
 
     // 合并K个升序链表
