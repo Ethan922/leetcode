@@ -1,8 +1,7 @@
 package com.sc;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
+import java.util.concurrent.Semaphore;
 
 public class Review {
     public int subarraySum(int[] nums, int k) {
@@ -103,19 +102,19 @@ public class Review {
         return dummy.next;
     }
 
-    public Node copyRandomList(Node head) {
-        Map<Node, Node> map = new HashMap<>();
-        Node p = head;
-        while (p != null) {
-            map.put(p, new Node(p.val));
-            p = p.next;
-        }
-        for (Node node : map.keySet()) {
-            map.get(node).next = map.get(node.next);
-            map.get(node).random = map.get(node.random);
-        }
-        return map.get(head);
-    }
+//    public Node copyRandomList(Node head) {
+//        Map<Node, Node> map = new HashMap<>();
+//        Node p = head;
+//        while (p != null) {
+//            map.put(p, new Node(p.val));
+//            p = p.next;
+//        }
+//        for (Node node : map.keySet()) {
+//            map.get(node).next = map.get(node.next);
+//            map.get(node).random = map.get(node.random);
+//        }
+//        return map.get(head);
+//    }
 
 
     public ListNode sortList(ListNode head) {
@@ -159,5 +158,135 @@ public class Review {
         }
         return slow;
     }
+
+    public int trap(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int ans = 0;
+        for (int i = 0; i < height.length; i++) {
+            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+                Integer mid = stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                int leftIndex = stack.peek();
+                int rightIndex = i;
+                int width = rightIndex - leftIndex + 1;
+                ans += width * (Math.min(height[leftIndex], height[rightIndex]) - height[mid]);
+
+            }
+            stack.push(i);
+        }
+        return ans;
+    }
+
+    static Semaphore semaphoreA = new Semaphore(1);
+    static Semaphore semaphoreB = new Semaphore(0);
+    static Semaphore semaphoreC = new Semaphore(0);
+
+    private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
+
+    public static void main(String[] args) {
+        Integer i = threadLocal.get();
+        threadLocal.set(i);
+        threadLocal.remove();
+        new Thread(() -> {
+            try {
+                semaphoreA.acquire();
+                Thread.sleep(500);
+                System.out.println("A");
+                semaphoreB.release();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                semaphoreB.acquire();
+                System.out.println("B");
+                semaphoreC.release();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+        new Thread(() -> {
+            try {
+                semaphoreC.acquire();
+                System.out.println("C");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+
+    public boolean isTrionic(int[] nums) {
+        if (nums[0] >= nums[1]) return false;
+        int i;
+        for (i = 1; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1]) {
+                break;
+            } else if (nums[i] == nums[i + 1]) {
+                return false;
+            }
+        }
+        int j = i + 1;
+        if (j >= nums.length - 1) return false;
+        for (; j < nums.length - 2; j++) {
+            if (nums[j] < nums[j + 1]) {
+                break;
+            } else if (nums[j] == nums[j + 1]) {
+                return false;
+            }
+        }
+        int k = j + 1;
+        if (k == nums.length - 1) {
+            return nums[k] > nums[k - 1];
+        }
+        for (; k < nums.length - 1; k++) {
+            if (nums[k] > nums[k + 1]) {
+                return false;
+            } else if (nums[k] == nums[k + 1]) {
+                return false;
+            }
+        }
+        return k >= nums.length - 1;
+    }
+
+    public List<Integer> preorder(Node root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<Integer> ans = new ArrayList<>();
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            ans.add(node.val);
+            List<Node> children = node.children;
+            for (int i = children.size() - 1; i >= 0; i--) {
+                stack.push(children.get(i));
+            }
+        }
+        return ans;
+
+    }
+
+    class Node {
+        public int val;
+        public List<Node> children;
+
+        public Node() {
+        }
+
+        public Node(int _val) {
+            val = _val;
+        }
+
+        public Node(int _val, List<Node> _children) {
+            val = _val;
+            children = _children;
+        }
+    }
+
 
 }

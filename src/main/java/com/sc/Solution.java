@@ -1686,6 +1686,25 @@ public class Solution {
         }
     }
 
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            ans.add(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            node = node.left;
+        }
+        return ans;
+    }
+
+
     private int count(int[] nums, int n) {
         int count = 0;
         for (int num : nums) {
@@ -1708,14 +1727,14 @@ public class Solution {
     }
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        System.out.println(multiply("123", "456"));
-//        Integer i = Integer.valueOf(2);
-//        String s = "abc";
-//        test(i, s);
-//        System.out.println(s);
-//        System.out.println("abc");
-//        System.out.println(i);
-//        System.out.println(Integer.valueOf(2));
+//        System.out.println(multiply("123", "456"));
+        Integer i = Integer.valueOf(2);
+        String s = "abc";
+        test(i, s);
+        System.out.println(s);
+        System.out.println("abc");
+        System.out.println(i);
+        System.out.println(Integer.valueOf(2));
 //        minSubArrayLen(7, new int[]{2, 3, 1, 2, 4, 3});
 //        System.out.println(maxSubArrayDP(new int[]{5, 4, -1, 7, 8}));
 //        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
