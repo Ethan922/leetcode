@@ -1699,7 +1699,6 @@ public class Solution {
             if (node.left != null) {
                 stack.push(node.left);
             }
-            node = node.left;
         }
         return ans;
     }
