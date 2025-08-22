@@ -33,6 +33,7 @@ public class Heap {
         return this.size;
     }
 
+    // 自动扩容1.5倍
     private void grow() {
         int newCap = this.capacity + (this.capacity >> 1);
         int[] newArr = new int[newCap];
@@ -41,14 +42,19 @@ public class Heap {
         this.capacity = newCap;
     }
 
+    // 添加元素到堆中
     public void offer(int val) {
+        // 容量已满自动扩容
         if (size == capacity) {
             grow();
         }
+        // 将元素添加到数组的最后
         arr[size++] = val;
+        // 从该元素上浮
         up(size - 1);
     }
 
+    // 获得堆顶元素
     public int peek() {
         if (size == 0) {
             throw new RuntimeException();
@@ -56,24 +62,32 @@ public class Heap {
         return arr[0];
     }
 
+    // 移除堆顶元素
     public int poll() {
         if (size == 0) {
             throw new RuntimeException();
         }
         int top = arr[0];
+        // 将堆顶与最后一个元素交换
         swap(0, size - 1);
         size--;
+        // 从堆顶开始下潜
         down(0);
         return top;
     }
 
     private void heapify() {
+        // 建堆，从最后一个非叶子节点开始调整
+        // 最后一个叶子节点的索引：size/2 - 1
         for (int i = size / 2 - 1; i >= 0; i++) {
             down(i);
         }
     }
 
+    // 上浮元素
     private void up(int child) {
+        // 计算父节点的下标
+        // 父节点的下标：(index - 1) / 2
         int parent = (child - 1) / 2;
         if (isMax ? arr[child] > arr[parent] : arr[child] < arr[parent]) {
             swap(child, parent);
@@ -81,7 +95,11 @@ public class Heap {
         }
     }
 
+    // 下潜元素
     private void down(int parent) {
+        // 计算左右孩子下标
+        // 左孩子下标：index * 2 + 1
+        // 右孩子下标：left + 1
         int left = parent * 2 + 1;
         int right = left + 1;
         int minOrMax = arr[parent];
