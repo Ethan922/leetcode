@@ -14,20 +14,19 @@ public class QuickSort {
     public int partition(int[] nums, int left, int right) {
         // 选取最右边的元素作为基准元素
         int pivot = nums[right];
-        // i指向小于等于pivot的元素区域末尾
-        int i = left - 1;
-        int j = left;
-        while (j < right) {
-            if (nums[j] <= pivot) {
-                i++;
+        // low指向小于等于pivot的元素右边界（不包含low）
+        int low = left;
+        while (left < right) {
+            if (nums[left] <= pivot) {
                 // 小于pivot的元素移动到左侧
-                swap(nums, i, j);
+                swap(nums, low, left);
+                low++;
             }
-            j++;
+            left++;
         }
         // 将基准元素移动到中间
-        swap(nums, i + 1, right);
-        return i + 1;
+        swap(nums, low, right);
+        return low;
     }
 
     private void swap(int[] nums, int i, int j) {
