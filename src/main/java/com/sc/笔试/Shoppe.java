@@ -1,4 +1,4 @@
-package com.sc;
+package com.sc.笔试;
 
 import java.util.Arrays;
 
