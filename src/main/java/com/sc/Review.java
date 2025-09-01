@@ -288,5 +288,94 @@ public class Review {
         }
     }
 
+    public String decodeString(String s) {
+        Stack<Integer> multiStack = new Stack<>();
+        Stack<String> stack = new Stack<>();
+        int multi = 0;
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '[') {
+                multiStack.push(multi);
+                multi = 0;
+                stack.push(res.toString());
+                res = new StringBuilder();
+            } else if (c == ']') {
+                int n = multiStack.pop();
+                StringBuilder temp = new StringBuilder(stack.pop());
+                for (int j = 0; j < n; j++) {
+                    temp.append(res);
+                }
+                res = temp;
+            } else if (c >= '0' && c <= '9') {
+                multi = multi * 10 + c - '0';
+            } else {
+                res.append(c);
+            }
+        }
+        return res.toString();
+    }
+
+    public int findMin(int[] nums) {
+        int l = 0;
+        int r = nums.length - 1;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > nums[r]) {
+                l = mid - 1;
+            } else {
+                r = mid;
+            }
+        }
+        return nums[r];
+    }
+
+    public int search(int[] nums, int target) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (target < nums[r]) {
+                if (nums[mid] < target || nums[mid] > nums[r]) {
+                    l = mid + 1;
+                } else if (nums[mid] > target) {
+                    r = mid - 1;
+                } else {
+                    return mid;
+                }
+            } else if (target > nums[r]) {
+                if (nums[mid] < nums[r] || nums[mid] > target) {
+                    r = mid - 1;
+                } else if (nums[mid] < target) {
+                    l = mid + 1;
+                } else {
+                    return mid;
+                }
+            } else {
+                return r;
+            }
+        }
+        return -1;
+    }
+
+    public int firstMissingPositive(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] <= 0) {
+                nums[i] = nums.length + 1;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int num = Math.abs(nums[i]);
+            if (num <= nums.length) {
+                nums[num - 1] = -Math.abs(nums[num - 1]);
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return nums.length+1;
+    }
+
 
 }
