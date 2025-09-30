@@ -2,7 +2,7 @@ package com.sc.笔试;
 
 import java.util.Scanner;
 
-public class Main {
+public class Huawei {
 
     static int ans = Integer.MAX_VALUE;
     static boolean[][] visited;
